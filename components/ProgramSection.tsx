@@ -79,12 +79,12 @@ export default function ProgramSection() {
               
               <div className="mb-8 mt-2">
                 <h3 className={`text-2xl font-extrabold mb-3 ${program.recommended ? 'text-white' : 'text-slate-900'}`}>{program.name}</h3>
-                <p className={`text-sm leading-relaxed ${program.recommended ? 'text-slate-300' : 'text-slate-500'} min-h-[48px]`}>{program.description}</p>
+                <p className={`text-sm leading-relaxed ${program.recommended ? 'text-slate-300' : 'text-slate-500'} min-h-[60px]`}>{program.description}</p>
               </div>
 
               <div className="mb-10">
                 <div className="flex items-baseline gap-1">
-                  <span className={`text-5xl font-black tracking-tight ${program.recommended ? 'bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400' : 'text-slate-900'}`}>{program.price}</span>
+                  <span className={`text-4xl xl:text-5xl font-black tracking-tight whitespace-nowrap ${program.recommended ? 'bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400' : 'text-slate-900'}`}>{program.price}</span>
                   <span className={`text-sm font-bold ${program.recommended ? 'text-slate-400' : 'text-slate-400'}`}>{program.period}</span>
                 </div>
               </div>
