@@ -1,0 +1,86 @@
+// File: prisma/schema.prisma
+// Menggunakan SQLite untuk kemudahan testing lokal tanpa install database
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Model 1: User (Admin & Siswa)
+model User {
+  id        String   @id @default(cuid())
+  nama      String
+  nomor_wa  String   @unique
+  password  String   // Akan menyimpan hashed password
+  role      String   @default("STUDENT") // "ADMIN" atau "STUDENT"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relasi
+  enrollments     Enrollment[]
+  learningRecords LearningRecord[]
+  certificates    Certificate[]
+}
+
+// Model 2: Program (Daftar Kelas: Dasar, Menengah, Lanjutan)
+model Program {
+  id           String   @id @default(cuid())
+  nama_program String
+  deskripsi    String?  
+  harga        Int
+  createdAt    DateTime @default(now())
+
+  // Relasi
+  enrollments  Enrollment[]
+  certificates Certificate[]
+}
+
+// Model 3: Enrollment (Pendaftaran / Status Siswa dalam suatu Program)
+model Enrollment {
+  id             String   @id @default(cuid())
+  userId         String
+  programId      String
+  status         String   @default("ACTIVE") // "ACTIVE", "COMPLETED", "DROPPED"
+  tanggal_daftar DateTime @default(now())
+
+  // Relasi
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  // Mencegah siswa mendaftar program yang sama dua kali secara duplikat
+  @@unique([userId, programId])
+}
+
+// Model 4: LearningRecord (Riwayat Nilai / E-Rapor)
+model LearningRecord {
+  id                String   @id @default(cuid())
+  studentId         String
+  tanggal_pertemuan DateTime
+  topik_bahasan     String
+  nilai             Int
+  catatan_ustadz    String?  
+  createdAt         DateTime @default(now())
+
+  // Relasi ke User (Siswa)
+  student User @relation(fields: [studentId], references: [id], onDelete: Cascade)
+}
+
+// Model 5: Certificate (Sertifikat Lulus)
+model Certificate {
+  id             String   @id @default(cuid())
+  studentId      String
+  programId      String
+  url_sertifikat String
+  issuedAt       DateTime @default(now())
+
+  // Relasi
+  student User    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  // Satu siswa hanya bisa memiliki satu sertifikat untuk satu program
+  @@unique([studentId, programId])
+}
