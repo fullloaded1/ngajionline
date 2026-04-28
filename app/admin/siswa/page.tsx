@@ -1,6 +1,21 @@
 import { Search, Plus, MoreVertical } from "lucide-react";
+import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
-export default function AdminSiswaPage() {
+export default async function AdminSiswaPage() {
+  // Ambil semua data siswa dari database beserta program yang diikuti
+  const students = await prisma.user.findMany({
+    where: { role: "STUDENT" },
+    include: {
+      enrollments: {
+        include: {
+          program: true
+        }
+      }
+    },
+    orderBy: { createdAt: 'desc' }
+  });
+
   return (
     <div>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
@@ -8,10 +23,10 @@ export default function AdminSiswaPage() {
           <h1 className="text-2xl font-bold text-slate-900">Data Siswa</h1>
           <p className="text-slate-500">Kelola informasi santri dan status pendaftaran.</p>
         </div>
-        <button className="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 rounded-xl font-medium transition-colors shadow-sm">
+        <Link href="/admin/siswa/tambah" className="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-5 py-2.5 rounded-xl font-medium transition-colors shadow-sm">
           <Plus className="w-5 h-5" />
           <span>Tambah Siswa</span>
-        </button>
+        </Link>
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
@@ -41,58 +56,48 @@ export default function AdminSiswaPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {/* Contoh Data */}
-              <tr className="bg-white hover:bg-slate-50 transition-colors">
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold">
-                      A
-                    </div>
-                    <span className="font-medium text-slate-900">Ahmad Rizki</span>
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-slate-600">081234567890</td>
-                <td className="px-6 py-4">
-                  <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-lg border border-blue-100">Menengah</span>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <button className="text-slate-400 hover:text-slate-600">
-                    <MoreVertical className="w-5 h-5" />
-                  </button>
-                </td>
-              </tr>
-              
-              <tr className="bg-white hover:bg-slate-50 transition-colors">
-                <td className="px-6 py-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold">
-                      S
-                    </div>
-                    <span className="font-medium text-slate-900">Siti Aisyah</span>
-                  </div>
-                </td>
-                <td className="px-6 py-4 text-slate-600">089876543210</td>
-                <td className="px-6 py-4">
-                  <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-lg border border-blue-100">Dasar</span>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <button className="text-slate-400 hover:text-slate-600">
-                    <MoreVertical className="w-5 h-5" />
-                  </button>
-                </td>
-              </tr>
+              {students.length === 0 && (
+                <tr>
+                  <td colSpan={4} className="px-6 py-8 text-center text-slate-500">
+                    Belum ada data siswa terdaftar.
+                  </td>
+                </tr>
+              )}
+              {students.map((student) => {
+                const activeProgram = student.enrollments.find(e => e.status === "ACTIVE")?.program.nama_program || "-";
+                const initial = student.nama.charAt(0).toUpperCase();
+
+                return (
+                  <tr key={student.id} className="bg-white hover:bg-slate-50 transition-colors">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold">
+                          {initial}
+                        </div>
+                        <span className="font-medium text-slate-900">{student.nama}</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-slate-600">{student.nomor_wa}</td>
+                    <td className="px-6 py-4">
+                      <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-lg border border-blue-100">
+                        {activeProgram}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button className="text-slate-400 hover:text-slate-600">
+                        <MoreVertical className="w-5 h-5" />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
         
         {/* Pagination Dummy */}
         <div className="p-4 border-t border-slate-100 flex items-center justify-between text-sm text-slate-500">
-          <span>Menampilkan 1 hingga 2 dari 2 data</span>
-          <div className="flex gap-1">
-            <button className="px-3 py-1 border border-slate-200 rounded hover:bg-slate-50 disabled:opacity-50" disabled>Seb</button>
-            <button className="px-3 py-1 bg-primary-600 text-white rounded">1</button>
-            <button className="px-3 py-1 border border-slate-200 rounded hover:bg-slate-50 disabled:opacity-50" disabled>Sel</button>
-          </div>
+          <span>Menampilkan total {students.length} data</span>
         </div>
       </div>
     </div>
