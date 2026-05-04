@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-navy-600 text-silver-100;
+  }
+}
+
+@layer utilities {
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #E8C97A 0%, #C9A84C 50%, #A07830 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-silver-gradient {
+    background: linear-gradient(135deg, #E0E5EC 0%, #A8B2C0 50%, #7A8494 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .bg-gold-gradient {
+    background: linear-gradient(135deg, #E8C97A 0%, #C9A84C 50%, #A07830 100%);
+  }
+  .border-gold-glow {
+    box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.3), 0 0 20px rgba(201, 168, 76, 0.1);
+  }
+  .card-navy {
+    background: rgba(28, 36, 68, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(201, 168, 76, 0.15);
+  }
+}
