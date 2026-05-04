@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Users, BookOpen, GraduationCap, TrendingUp } from "lucide-react";
 
 export default function AdminDashboard() {
