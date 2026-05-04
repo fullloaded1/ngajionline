@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import Image from "next/image";
 import { LayoutDashboard, Users, GraduationCap, ClipboardList, LogOut, ShieldCheck } from "lucide-react";
