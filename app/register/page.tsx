@@ -19,15 +19,16 @@ const PROGRAMS: ProgramOption[] = [
 export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [programs, setPrograms] = useState<ProgramOption[]>(PROGRAMS);
+  const [programs, setPrograms] = useState<ProgramOption[]>([{ id: "", name: "-- Pilih Program --", price: "" }]);
   const [selectedProgram, setSelectedProgram] = useState<ProgramOption | null>(null);
+  const [loadingPrograms, setLoadingPrograms] = useState(true);
 
   // Fetch program dari DB
   useEffect(() => {
     fetch("/api/programs")
       .then((r) => r.json())
       .then((data) => {
-        if (data?.programs) {
+        if (data?.programs && data.programs.length > 0) {
           setPrograms([
             { id: "", name: "-- Pilih Program --", price: "" },
             ...data.programs.map((p: { id: string; nama_program: string; harga: number }) => ({
@@ -36,9 +37,15 @@ export default function RegisterPage() {
               price: `Rp ${p.harga.toLocaleString("id-ID")}/bulan`,
             })),
           ]);
+        } else {
+          // Fallback dummy jika DB kosong
+          setPrograms(PROGRAMS);
         }
       })
-      .catch(() => {}); // fallback ke dummy jika API belum ada
+      .catch(() => {
+        setPrograms(PROGRAMS); // fallback ke dummy jika API gagal
+      })
+      .finally(() => setLoadingPrograms(false));
   }, []);
 
   const handleSubmit = async (formData: FormData) => {
@@ -309,26 +316,35 @@ export default function RegisterPage() {
               >
                 Pilih Program Kelas
               </label>
-              <select
-                id="programId"
-                name="programId"
-                required
-                onChange={(e) => {
-                  const p = programs.find((x) => x.id === e.target.value);
-                  setSelectedProgram(p || null);
-                }}
-                className="w-full px-4 py-3.5 rounded-2xl outline-none transition-all font-medium text-white"
-                style={{
-                  background: "rgba(28,36,68,0.7)",
-                  border: "1px solid rgba(168,178,192,0.2)",
-                }}
-              >
-                {programs.map((p) => (
-                  <option key={p.id} value={p.id} style={{ background: "#1C2444" }}>
-                    {p.name} {p.price ? `— ${p.price}` : ""}
-                  </option>
-                ))}
-              </select>
+              <div className="relative">
+                <select
+                  id="programId"
+                  name="programId"
+                  required
+                  disabled={loadingPrograms}
+                  onChange={(e) => {
+                    const p = programs.find((x) => x.id === e.target.value);
+                    setSelectedProgram(p || null);
+                  }}
+                  className="w-full px-4 py-3.5 rounded-2xl outline-none transition-all font-medium"
+                  style={{
+                    background: "#1C2444",
+                    border: "1px solid rgba(168,178,192,0.2)",
+                    color: "#ffffff",
+                    colorScheme: "dark",
+                  }}
+                >
+                  {loadingPrograms ? (
+                    <option value="">Memuat program...</option>
+                  ) : (
+                    programs.map((p) => (
+                      <option key={p.id} value={p.id} style={{ background: "#1C2444", color: "#ffffff" }}>
+                        {p.name}{p.price ? ` — ${p.price}` : ""}
+                      </option>
+                    ))
+                  )}
+                </select>
+              </div>
 
               {/* Info harga */}
               {selectedProgram?.price && (
