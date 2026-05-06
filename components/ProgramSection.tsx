@@ -135,6 +135,125 @@ export default function ProgramSection() {
             </div>
           ))}
         </div>
+
+        {/* ====== STRUKTUR PROGRAM KELAS ====== */}
+        <div className="mt-28">
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <div
+              className="inline-block px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4 border"
+              style={{ background: 'rgba(201,168,76,0.1)', borderColor: 'rgba(201,168,76,0.3)', color: '#C9A84C' }}
+            >
+              Jenjang Belajar
+            </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+              Struktur Program Kelas
+            </h2>
+            <p className="text-lg md:text-xl text-silver-300 font-medium">
+              Tersedia enam jenjang kelas yang dirancang sesuai usia dan kemampuan belajar.
+            </p>
+          </div>
+
+          {/* Grid 6 Kartu */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                level: 'LEVEL 1 · USIA 4–7 TAHUN',
+                name: 'Kelas Iqra & Pra-Baca',
+                desc: 'Pengenalan huruf hijaiyah, harakat dasar, dan hafalan doa harian',
+                price: 'Rp 200–300rb / bulan',
+                tags: ['Tersedia Online', 'Ramah Anak'],
+              },
+              {
+                level: 'LEVEL 2 · USIA 7–12 TAHUN',
+                name: 'Kelas Tartil Al-Qur\'an',
+                desc: 'Membaca Al-Qur\'an dengan lancar, hafalan juz 30, dan tajwid dasar',
+                price: 'Rp 300–400rb / bulan',
+                tags: ['Tersedia Online', 'E-Rapor'],
+              },
+              {
+                level: 'LEVEL 3 · REMAJA & DEWASA',
+                name: 'Kelas Tahsin',
+                desc: 'Perbaikan bacaan, makharijul huruf, dan hukum tajwid lengkap',
+                price: 'Rp 400–500rb / bulan',
+                tags: ['Bersertifikat', 'Tersedia Online'],
+              },
+              {
+                level: 'LEVEL 4 · SEMUA USIA',
+                name: 'Kelas Tahfidz',
+                desc: 'Hafalan Al-Qur\'an dengan muraja\'ah terstruktur dan mutqin',
+                price: 'Rp 500–700rb / bulan',
+                tags: ['Bersertifikat', 'Evaluasi Rutin'],
+              },
+              {
+                level: 'KELAS KHUSUS · DEWASA',
+                name: 'Private Dewasa',
+                desc: 'Sesi 1-on-1 fleksibel, jadwal menyesuaikan, progress cepat',
+                price: 'Rp 600–900rb / bulan',
+                tags: ['Jadwal Fleksibel', '1-on-1'],
+              },
+              {
+                level: 'PROGRAM · SEMUA USIA',
+                name: 'Kelas Intensif Ramadan',
+                desc: 'Program khusus 30 hari, khatam Al-Qur\'an dan peningkatan spiritual',
+                price: 'Rp 500rb / paket',
+                tags: ['30 Hari', 'Khatam Qur\'an'],
+              },
+            ].map((kelas, i) => (
+              <div
+                key={i}
+                className="flex flex-col p-8 rounded-3xl transition-all duration-300 hover:-translate-y-2 group cursor-default"
+                style={{
+                  background: 'rgba(20,26,51,0.7)',
+                  border: '1px solid rgba(168,178,192,0.15)',
+                  backdropFilter: 'blur(8px)',
+                }}
+              >
+                {/* Level badge */}
+                <span
+                  className="text-[10px] font-bold uppercase tracking-widest mb-4 block"
+                  style={{ color: 'rgba(201,168,76,0.75)' }}
+                >
+                  {kelas.level}
+                </span>
+
+                {/* Nama kelas */}
+                <h3 className="text-2xl font-bold text-white mb-3 leading-snug group-hover:text-gold-300 transition-colors">
+                  {kelas.name}
+                </h3>
+
+                {/* Deskripsi */}
+                <p className="text-base font-medium leading-relaxed flex-1 mb-6 text-silver-300">
+                  {kelas.desc}
+                </p>
+
+                {/* Harga */}
+                <span className="text-xl font-extrabold text-gold-gradient mb-4">
+                  {kelas.price}
+                </span>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2">
+                  {kelas.tags.map((tag, t) => (
+                    <span
+                      key={t}
+                      className="text-[10px] font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full"
+                      style={{
+                        background: 'rgba(201,168,76,0.08)',
+                        border: '1px solid rgba(201,168,76,0.25)',
+                        color: 'rgba(201,168,76,0.8)',
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* ====== END STRUKTUR PROGRAM KELAS ====== */}
+
       </div>
     </section>
   );

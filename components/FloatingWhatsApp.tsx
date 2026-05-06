@@ -1,4 +1,4 @@
-import { MessageCircle } from "lucide-react";
+import { WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 
 export default function FloatingWhatsApp() {
   return (
@@ -13,7 +13,7 @@ export default function FloatingWhatsApp() {
       }}
       aria-label="Hubungi via WhatsApp"
     >
-      <MessageCircle className="w-8 h-8" style={{ color: '#1C2444' }} />
+      <WhatsappLogo size={34} weight="duotone" style={{ color: '#1C2444' }} />
     </a>
   );
 }

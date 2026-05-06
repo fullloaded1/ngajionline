@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Mail, Phone } from "lucide-react";
+import { MapPin, Envelope, Phone, InstagramLogo, YoutubeLogo, WhatsappLogo, FacebookLogo } from "@phosphor-icons/react/dist/ssr";
 
 export default function Footer() {
   return (
@@ -19,9 +19,29 @@ export default function Footer() {
                 <span className="text-[10px] font-semibold text-silver-400 tracking-widest uppercase">Ngaji Online</span>
               </div>
             </div>
-            <p className="text-base font-medium text-silver-400 leading-relaxed">
+            <p className="text-base font-medium text-silver-400 leading-relaxed mb-6">
               Platform Ngaji Online Premium. Solusi terbaik belajar Al-Qur&apos;an dan Ilmu Agama secara terstruktur, kapan saja, dan di mana saja.
             </p>
+            {/* Sosial Media */}
+            <div className="flex items-center gap-3">
+              {[
+                { icon: <InstagramLogo size={20} weight="duotone" />, href: 'https://instagram.com', label: 'Instagram' },
+                { icon: <YoutubeLogo size={20} weight="duotone" />, href: 'https://youtube.com', label: 'YouTube' },
+                { icon: <WhatsappLogo size={20} weight="duotone" />, href: 'https://wa.me/6281234567890', label: 'WhatsApp' },
+                { icon: <FacebookLogo size={20} weight="duotone" />, href: 'https://facebook.com', label: 'Facebook' },
+              ].map(({ icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="social-icon"
+                >
+                  {icon}
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Navigasi */}
@@ -42,21 +62,21 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <div className="p-2 rounded-xl border"
                   style={{ background: 'rgba(201,168,76,0.1)', borderColor: 'rgba(201,168,76,0.2)' }}>
-                  <MapPin className="w-4 h-4 shrink-0 text-gold-400" />
+                  <MapPin size={18} weight="duotone" className="shrink-0 text-gold-400" />
                 </div>
                 <span className="mt-1">Jl. Pendidikan No. 123, Jakarta Selatan, Indonesia</span>
               </li>
               <li className="flex items-center gap-3">
                 <div className="p-2 rounded-xl border"
                   style={{ background: 'rgba(201,168,76,0.1)', borderColor: 'rgba(201,168,76,0.2)' }}>
-                  <Phone className="w-4 h-4 shrink-0 text-gold-400" />
+                  <Phone size={18} weight="duotone" className="shrink-0 text-gold-400" />
                 </div>
                 <span>+62 812 3456 7890</span>
               </li>
               <li className="flex items-center gap-3">
                 <div className="p-2 rounded-xl border"
                   style={{ background: 'rgba(201,168,76,0.1)', borderColor: 'rgba(201,168,76,0.2)' }}>
-                  <Mail className="w-4 h-4 shrink-0 text-gold-400" />
+                  <Envelope size={18} weight="duotone" className="shrink-0 text-gold-400" />
                 </div>
                 <span>halo@kalaam.id</span>
               </li>

@@ -7,6 +7,10 @@ const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Kalam | Platform Ngaji Online Premium",
   description: "Belajar Al-Qur'an dan Ilmu Agama secara terstruktur, kapan saja, dan di mana saja.",
+  icons: {
+    icon: "/logo.svg",
+    apple: "/logo.jpg",
+  },
 };
 
 export default function RootLayout({

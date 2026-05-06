@@ -57,13 +57,11 @@ export default function HeroSection() {
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-20">
             <a 
-              href="https://wa.me/6281234567890?text=Halo%20Kalaam,%20saya%20ingin%20daftar%20program%20ngaji."
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/register"
               className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold shadow-lg hover:-translate-y-1 transition-all duration-300 text-navy-700 bg-gold-gradient"
               style={{ boxShadow: '0 8px 32px rgba(201,168,76,0.35)' }}
             >
-              <span>Daftar via WA</span>
+              <span>Daftar Sekarang</span>
               <ArrowRight className="w-5 h-5" />
             </a>
             

@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 
 import Link from "next/link";
 import Image from "next/image";
-import { BookMarked, CheckCircle, Clock, Lock, AlertCircle, Upload, Clock3 } from "lucide-react";
+import { BookBookmark, CheckCircle, Clock, Warning, HourglassMedium, LockSimple } from "@phosphor-icons/react/dist/ssr";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -33,9 +33,9 @@ export default async function DashboardPage() {
   const rataRataNilai =
     totalPertemuan > 0
       ? (
-          user.learningRecords.reduce((acc, curr) => acc + curr.nilai, 0) /
-          totalPertemuan
-        ).toFixed(1)
+        user.learningRecords.reduce((acc, curr) => acc + curr.nilai, 0) /
+        totalPertemuan
+      ).toFixed(1)
       : 0;
 
   const activeEnrollment = user.enrollments[0] ?? null;
@@ -100,7 +100,7 @@ export default async function DashboardPage() {
                 className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4"
                 style={{ background: "rgba(201,168,76,0.15)" }}
               >
-                <AlertCircle className="w-8 h-8 text-gold-400" />
+                <Warning size={32} weight="duotone" className="text-gold-400" />
               </div>
               <h1 className="text-2xl font-extrabold text-white mb-2">
                 Selamat Datang, {user.nama}!
@@ -124,7 +124,7 @@ export default async function DashboardPage() {
                   className="w-10 h-10 rounded-xl flex items-center justify-center"
                   style={{ background: "rgba(201,168,76,0.15)" }}
                 >
-                  <BookMarked className="w-5 h-5 text-gold-400" />
+                  <BookBookmark size={20} weight="duotone" className="text-gold-400" />
                 </div>
                 <h2 className="text-xl font-bold text-white">Instruksi Pembayaran</h2>
               </div>
@@ -203,7 +203,7 @@ export default async function DashboardPage() {
                 className="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6"
                 style={{ background: "rgba(201,168,76,0.15)" }}
               >
-                <Clock3 className="w-10 h-10 text-gold-400" />
+                <HourglassMedium size={40} weight="duotone" className="text-gold-400" />
               </div>
               <h1 className="text-2xl font-extrabold text-white mb-4">
                 Pembayaran Dalam Proses Verifikasi
@@ -292,9 +292,9 @@ export default async function DashboardPage() {
             {/* Stats */}
             <section className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
               {[
-                { icon: <BookMarked className="w-6 h-6 text-gold-400" />, label: "Total Pertemuan", value: `${totalPertemuan} Sesi`, bg: "rgba(201,168,76,0.15)" },
-                { icon: <CheckCircle className="w-6 h-6 text-silver-300" />, label: "Rata-rata Nilai", value: String(rataRataNilai), bg: "rgba(168,178,192,0.15)" },
-                { icon: <Clock className="w-6 h-6 text-gold-400" />, label: "Kehadiran", value: "100%", bg: "rgba(201,168,76,0.15)" },
+                { icon: <BookBookmark size={24} weight="duotone" className="text-gold-400" />, label: "Total Pertemuan", value: `${totalPertemuan} Sesi`, bg: "rgba(201,168,76,0.15)" },
+                { icon: <CheckCircle size={24} weight="duotone" className="text-silver-300" />, label: "Rata-rata Nilai", value: String(rataRataNilai), bg: "rgba(168,178,192,0.15)" },
+                { icon: <Clock size={24} weight="duotone" className="text-gold-400" />, label: "Kehadiran", value: "100%", bg: "rgba(201,168,76,0.15)" },
               ].map((stat, i) => (
                 <div
                   key={i}
@@ -389,7 +389,7 @@ export default async function DashboardPage() {
                   className="w-full md:w-auto flex justify-center items-center gap-3 px-8 py-4 rounded-2xl font-bold cursor-not-allowed border"
                   style={{ background: "rgba(28,36,68,0.7)", borderColor: "rgba(168,178,192,0.2)", color: "#A8B2C0" }}
                 >
-                  <Lock className="w-5 h-5" />
+                  <LockSimple size={20} weight="duotone" />
                   <span>Unduh PDF (Terkunci)</span>
                 </button>
               </div>
